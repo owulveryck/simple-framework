@@ -2,10 +2,30 @@ package server
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/gorilla/mux"
+	"golang.org/x/net/websocket"
 	"log"
 	"net/http"
 )
+
+// Courtesy of http://41j.com/blog/2014/12/simple-websocket-example-golang/
+func echoHandler(ws *websocket.Conn) {
+
+	for {
+		receivedtext := make([]byte, 100)
+
+		n, err := ws.Read(receivedtext)
+
+		if err != nil {
+			fmt.Printf("Received: %d bytes\n", n)
+
+		}
+
+		s := string(receivedtext[:n])
+		fmt.Printf("Received: %d bytes: %s\n", n, s)
+	}
+}
 
 func GetJson(w http.ResponseWriter, r *http.Request) {
 	q := mux.Vars(r)["jsonContent"]

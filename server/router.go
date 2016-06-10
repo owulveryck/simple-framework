@@ -2,6 +2,7 @@ package server
 
 import (
 	"github.com/gorilla/mux"
+	"golang.org/x/net/websocket"
 	"net/http"
 )
 
@@ -14,6 +15,12 @@ func NewRouter() *mux.Router {
 		Path("/json/{jsonContent}").
 		Name("Dynamic").
 		HandlerFunc(GetJson)
+
+	router.
+		Methods("GET").
+		Path("/echo").
+		Name("WebSocket").
+		Handler(websocket.Handler(echoHandler))
 
 	router.
 		Methods("GET").
