@@ -1,10 +1,10 @@
 package main
 
 import (
-	"./server"
 	"flag"
 	"fmt"
 	"github.com/kelseyhightower/envconfig"
+	"github.com/owulveryck/simple-framework/server"
 	"log"
 	"net/http"
 	"os"
