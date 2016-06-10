@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/gorilla/mux"
 	"golang.org/x/net/websocket"
+	"io"
 	"log"
 	"net/http"
 )
@@ -24,6 +25,8 @@ func echoHandler(ws *websocket.Conn) {
 
 		s := string(receivedtext[:n])
 		fmt.Printf("Received: %d bytes: %s\n", n, s)
+		io.Copy(ws, ws)
+		fmt.Printf("Sent: %s\n", s)
 	}
 }
 
