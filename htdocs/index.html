@@ -46,7 +46,11 @@
         </div>
             <div class="row">
             <div id="tree" class="col-lg-3 col-md-offset-1"> </div>
-                <div id="output" class="well col-lg-7">Select a node.</div>
+                <input id="sendtext" type="text" />
+                <input type="button" id="sendBtn" value="send" onclick="senddata()"></input>
+                <div id="output" class="well col-lg-7">
+
+                </div>
             </div>
       <!-- end body -->
     </section>
@@ -77,6 +81,7 @@
 
     </script>
     <script type="text/javascript" src="js/myscript.js"></script>
+    <script type="text/javascript" src="js/websocket.js"></script>
   </body>
 </html>
 
