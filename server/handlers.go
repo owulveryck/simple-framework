@@ -2,31 +2,36 @@ package server
 
 import (
 	"encoding/json"
-	"fmt"
 	"github.com/gorilla/mux"
+	//"github.com/grafov/bcast"
 	"golang.org/x/net/websocket"
-	"io"
 	"log"
 	"net/http"
+	"time"
 )
 
-// Courtesy of http://41j.com/blog/2014/12/simple-websocket-example-golang/
+type Message struct {
+	Topic  string    `json:"topic"`
+	Sender string    `json:"sender"`
+	Msg    string    `json:"message"`
+	Date   time.Time `json:"-"`
+}
+
 func echoHandler(ws *websocket.Conn) {
 
 	for {
-		receivedtext := make([]byte, 100)
 
-		n, err := ws.Read(receivedtext)
-
+		var message Message
+		err := websocket.JSON.Receive(ws, &message)
 		if err != nil {
-			fmt.Printf("Received: %d bytes\n", n)
-
+			log.Println("Unable to read message", err)
 		}
 
-		s := string(receivedtext[:n])
-		fmt.Printf("Received: %d bytes: %s\n", n, s)
-		io.Copy(ws, ws)
-		fmt.Printf("Sent: %s\n", s)
+		message.Sender = "Server"
+		err = websocket.JSON.Send(ws, message)
+		if err != nil {
+			log.Println("Unable to send message", err)
+		}
 	}
 }
 

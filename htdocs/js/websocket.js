@@ -1,7 +1,14 @@
 var serversocket = new WebSocket("wss://lab.owulveryck.info:443/echo");
 
 serversocket.onopen = function() {
-    serversocket.send("Connection init");
+    var msg = {
+        topic:  "null",
+        sender: "null",
+        message: "Connection init",
+        date: Date.now()
+    };
+     
+    serversocket.send(JSON.stringify(msg));
 }
 
 // Write message on receive
@@ -10,8 +17,15 @@ serversocket.onmessage = function(e) {
 };
 
 function senddata() {
-    var data = document.getElementById('sendtext').value;
-    serversocket.send(data);
-    document.getElementById('output').innerHTML += "Sent: " + data + "<br>";
+    // Construct a msg object containing the data the server needs to process the message from the chat client.
+    var msg = {
+        topic:  document.getElementById("topic").value,
+        sender: document.getElementById("sender").value,
+        message: document.getElementById("message").value,
+        date: Date.now()
+    };
+     
+    serversocket.send(JSON.stringify(msg));
+    document.getElementById('output').innerHTML += "Sent: " + JSON.stringify(msg) + "<br>";
 }
 
