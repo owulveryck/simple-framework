@@ -26,7 +26,7 @@ func main() {
 	var help = flag.Bool("help", false, "show help message")
 	flag.Parse()
 	// Default values
-	config.Port = 8080
+	config.Port = 443
 	config.Scheme = "https"
 	config.Address = "0.0.0.0"
 	config.Debug = false
