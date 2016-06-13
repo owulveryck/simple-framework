@@ -1,4 +1,4 @@
-var serversocket = new WebSocket("wss://lab.owulveryck.info:443/echo");
+var serversocket = new WebSocket('wss://' + window.location.host + '/echo');
 
 serversocket.onopen = function() {
     serversocket.send("Connection init");
